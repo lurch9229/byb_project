@@ -1,0 +1,47 @@
+        CREATE TABLE StudentTable(
+            stu_Num char(6) NOT NULL,
+            stu_SName varchar(15),
+            stu_FName varchar(15),
+            stu_Initial char(1),
+            stu_StartDate date,
+            course_Code char(3),
+            proj_Num int(2),
+            PRIMARY KEY (stu_Num)
+        );
+
+        INSERT INTO StudentTable
+            VALUES (01, 'Snow', 'Jon', 'E', '2014/04/05', 201, 6),
+                   (02, 'Stark', 'Arya', 'C', '2017/07/12', 305, 11),
+                   (03, 'Lannister', 'Jamie', 'C', '2012/09/05', 101, 2),
+                   (04, 'Lannister', 'Cercei', 'J', '2012/09/05', 101, 2),
+                   (05, 'Greyjoy', 'Theon', 'I', '2015/06/13', 201, 5),
+                   (06, 'Tyrell', 'Margaery', 'Y', '2017/07/12', 305, 10),
+                   (07, 'Baratheon', 'Tommen', 'R', '2019/06/13', 201, 5);
+
+        SELECT * FROM StudentTable;
+        
+        SELECT * FROM StudentTable
+        WHERE course_Code = 305;
+        
+        UPDATE StudentTable
+        SET course_Code = 304
+        WHERE stu_Num = 07;
+        
+        SELECT * FROM StudentTable
+        WHERE stu_Num = 07;
+
+        DELETE FROM StudentTable
+        WHERE stu_FName='Jamie' AND stu_SName='Lannister' AND stu_StartDate= '2012/09/05' AND course_Code=101 AND proj_Num=2;
+        
+        SELECT * FROM StudentTable;
+        
+        UPDATE StudentTable
+        SET proj_Num = 14
+        WHERE stu_StartDate < '2016/01/01' AND course_Code >= 201;
+        
+        SELECT * FROM StudentTable
+        WHERE proj_Num=14;
+        
+        DROP TABLE StudentTable;
+        
+        SELECT * FROM StudentTable

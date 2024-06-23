@@ -1,0 +1,40 @@
+Seperation of Concerns for Task Manager Program
+
+
+Model:
+- Tasks
+- Users
+
+
+View:
+Display options list for tasks
+- Read Task
+- **Create a new Task
+- *Update Task
+- *Update Status of Task
+- **Delete a Task
+
+Display the task details
+- Task ID
+- Task Name
+- Task Description
+- Task Status
+
+
+Controller:
+Create Tasks
+- Create a Name
+- Description of the new Task
+- Assign an ID
+
+Assign roles
+- Check if User is Admin
+    - Change Role based on User.Name
+
+Update a Task
+- Check if User has correct Role
+    - Update Task Description
+    - Update Task Status 
+    if the user is an Admin
+        - Create a task
+        - Delete a task

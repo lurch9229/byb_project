@@ -1,0 +1,5 @@
+I have refactored a lot of my code, I found a an error when using the logout option where the logged user wouldn't be getting set to None after a log out
+So any User could get admin priviledges. I have moved menu inputs into the correct Class as a method. 
+Now when a user logs out, the program resets the User for a new one to log in and get the correct menu display
+
+ Now I am using a Task Handler class to better handle the storing and usage of tasks. I also think the new program would be much more modular in the future, for if Users or Tasks get new attributes

@@ -1,0 +1,17 @@
+1)  What is normalisation?
+    It is the process of organising data in the database. It creates tables and establishes relationships between said tables using rules 
+    to protect data and make the database flexible by eliminating redundancies and inconsistant dependancies 
+
+2)  When is a table in 1NF?
+    If ALL columns contain only atomic values. Each column can only have 1 value for each row in the table. 
+
+3)  When is a table 2NF?
+    If each attribute that is not part of the primary key depends on ALL parts of the primary key.
+    If it is in 1NF and has a single attribute UID
+    If it is in 1NF and has a multiple attribute UID and every regular attribute not part of the UID is dependant on ALL attributes in the multi-attribute UID, not just one attribute of the UID
+
+4)   When is a table 3NF?
+    A relation that is in First and Second Normal Form and in which no non-primary-key attribute is transitively dependent on the primary key, then it is in Third Normal Form (3NF).
+
+5)  What is a foreign key?
+    A foreign key is a column or columns of data in one table that refers to the unique data values -- often the primary key data -- in another table. Foreign keys link together two or more tables in a relational database.
