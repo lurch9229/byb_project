@@ -1,0 +1,110 @@
+{% extends 'base.html' %}  <!-- Extends to base template -->
+{% load static %}  <!-- Loads static files -->
+
+{% block title %}Sticky Notes{% endblock %}
+
+<!-- Read the javascript using an extra_head-->
+{% block extra_head %}
+    <script src="{% static 'notes/js/script.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Your Notes</h2>
+            <ul class="list-group">
+                <!-- Loop through each note in the notes context variable -->
+                {% for note in notes %}
+                <li class="list-group-item">
+                    <!-- Form for toggling notes visiblity -->
+                    <form method="post" action="{% url 'toggle_note' note.id %}">
+                        {% csrf_token %}  <!-- token for security in Django -->
+                        <!--Turn note.title element into a button to toggle sticky notes -->
+                        <button type="submit" class="btn btn-link note-toggle">{{ note.title }}</button>
+                    </form>
+
+                    <!-- Edit and Delete buttons -->
+                    <button class="btn btn-primary" onclick="document.getElementById('popupFormEdit_{{ note.id }}').style.display='block'">Edit</button>
+                    <button class="btn btn-danger" onclick="document.getElementById('popupFormDelete_{{ note.id }}').style.display='block'">Delete</button>
+                </li>
+                {% endfor %}
+            </ul>
+            <!-- Button to open the form for adding a new note -->
+            <button class="btn btn-primary mt-3" onclick="document.getElementById('popupFormAdd').style.display='block'">Add New Note</button>
+        </div>
+
+        <!-- Grid view -->
+        <div class="col-md-8">
+            <div class="notes-grid mt-4">
+                <div class="row">
+                    <!-- Loop through each note again for the grid view -->
+                    {% for note in notes %}
+                    <!-- Only display the note if it is marked as visible -->
+                    {% if note.is_visible %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ note.title }}</h5>
+                                <p class="card-text">{{ note.description }}</p>
+                                <p class="card-text"><small class="text-muted">Added on {{ note.date_added }}</small></p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Popup form for adding a new note -->
+<div id="popupFormAdd" class="popup">
+    <h2>Add New Note</h2>
+    <form action="{% url 'add_note' %}" method="post">  <!-- Form to add a new note -->
+        {% csrf_token %}  <!-- token for security in Django -->
+        {{ form.as_p }}  <!-- Render the form fields as paragraphs -->
+        <!-- Button to save new task -->
+        <button type="submit" class="btn btn-primary">Save</button>
+        <!-- Button to cancel and close the popup -->
+        <button type="button" class="btn btn-secondary" onclick="document.getElementById('popupFormAdd').style.display='none'">Cancel</button>
+    </form>
+</div>
+
+<!-- Popup for deleting a note -->
+{% for note in notes %}
+<div id="popupFormDelete_{{ note.id }}" class="popup">
+    <h2>Delete Note</h2>
+    <form action="{% url 'delete_note' note.id %}" method="post">  <!-- Form to delete a note -->
+        {% csrf_token %}  <!-- token for security in Django -->
+        <p>Are you sure you want to delete this note?</p>
+        <!-- Button to confirm delete -->
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <!-- Button to cancel and close the popup -->
+        <button type="button" class="btn btn-secondary" onclick="document.getElementById('popupFormDelete_{{ note.id }}').style.display='none'">Cancel</button>
+    </form>
+</div>
+
+<!-- Popup for updating a note -->
+<div id="popupFormEdit_{{ note.id }}" class="popup">
+    <h2>Edit Note</h2>
+    <form action="{% url 'update_note' note.id %}" method="post" class="edit-note-form" data-note-id="{{ note.id }}">  <!-- Form to edit a note -->
+        {% csrf_token %}  <!-- token for security in Django -->
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" name="title" value="{{ note.title }}">
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" name="description">{{ note.description }}</textarea>
+        </div>
+        <!-- Button to save changes made to note -->
+        <button type="submit" class="btn btn-primary">Save</button>
+        <!-- Button to cancel and close the popup -->
+        <button type="button" class="btn btn-secondary" onclick="document.getElementById('popupFormEdit_{{ note.id }}').style.display='none'">Cancel</button>
+    </form>
+</div>
+{% endfor %}
+
+{% endblock %}

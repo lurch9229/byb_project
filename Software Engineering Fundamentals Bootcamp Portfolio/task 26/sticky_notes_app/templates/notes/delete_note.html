@@ -1,0 +1,14 @@
+{% extends 'base.html' %}  <!-- Extends to base template -->
+{% load static %}  <!-- Loads static files -->
+
+{% block content %}
+<div class="container">
+    <h2>Delete Note</h2>
+    <p>Are you sure you want to delete "{{ note.title }}"?</p>  <!-- Delete confirmation message -->
+    <form method="post">  <!-- form to delete note -->
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>  <!-- Button to delete -->
+        <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>  <!-- Button to cancel delete and return to index -->
+    </form>
+</div>
+{% endblock %}

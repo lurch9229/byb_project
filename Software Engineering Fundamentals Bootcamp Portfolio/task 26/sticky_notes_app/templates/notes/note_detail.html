@@ -1,0 +1,12 @@
+{% extends 'base.html' %}  <!-- Extends to base template -->
+{% load static %}  <!-- Loads static files -->
+
+{% block title %}Sticky Notes - {{ note.title }}{% endblock %}
+
+<!-- Adds details about the note into the sticky note -->
+{% block content %}
+    <h2>{{ note.title }}</h2>
+    <p>{{ note.content }}</p> <!-- Corrected field name -->
+    <p>Created at: {{ note.created_at }}</p>
+    <a href="{% url 'note_list' %}">Back to Post</a>
+{% endblock %}
